@@ -1,7 +1,8 @@
-var app     = require('express')(),
-    http    = require('http').Server(app),
-    path    = require("path"),
-    static  = require('express').static;
+var app = require('express')(),
+    http = require('http').Server(app),
+    lib = require('../lib'),
+    path = require("path"),
+    static = require('express').static;
 
 app.use(static('www'));
 
