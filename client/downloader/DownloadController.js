@@ -1,9 +1,10 @@
 module.exports = ["DownloadController", ["$scope", "$http", function($scope, $http) {
-    $scope.total = 0;
     $scope.limit = 5;
     $scope.running = false;
+    $scope.total = 0;
 
     $scope.startDownload = function() {
+      $scope.reset();
       $scope.running = true;
       $scope.download();
     };
@@ -18,6 +19,10 @@ module.exports = ["DownloadController", ["$scope", "$http", function($scope, $ht
     $scope.report = function() {
       $scope.running = false;
       console.log("Downloaded: ", $scope.total);
+    };
+
+    $scope.reset = function() {
+      $scope.total = 0;
     };
 
     // helpers
