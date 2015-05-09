@@ -19,4 +19,11 @@ angular.module('app', [
       });
   }])
 
+.controller.apply(this, require("./downloader/DownloadController.js"))
+.directive("downloader", function() {
+  return {
+    templateUrl: "downloader/index.html"
+  }
+})
+
 ;

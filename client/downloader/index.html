@@ -1,0 +1,13 @@
+<div ng-controller="DownloadController">
+  <form novalidate>
+    Running: {{total}}
+
+    <fieldset ng-disabled="running">
+      <label>
+        Limit: <input type="number" ng-model="limit" value="5" /> MB
+      </label>
+
+      <input type="submit" ng-click="startDownload(limit)" value="Run" />
+    </fieldset>
+  </form>
+</div>
