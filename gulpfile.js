@@ -36,4 +36,8 @@ gulp.task('watch', function() {
     gulp.watch('client/**/*.html', ['templates']);
 });
 
+gulp.task('test', function() {
+
+});
+
 gulp.task('default', ['scripts', 'templates']);
