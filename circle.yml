@@ -8,4 +8,4 @@ deployment:
   production:
     branch: master
     commands:
-      - git push web@luvtap.us:repos/luvtap.git $CIRCLE_SHA1:master
+      - git push web@datarace.net:repos/datarace.git $CIRCLE_SHA1:master
