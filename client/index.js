@@ -7,3 +7,16 @@ angular.module('app', [
   'templates',
   'ui.bootstrap'
 ])
+
+.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/home', {
+        templateUrl: 'home/index.html'
+      }).
+      otherwise({
+        redirectTo: '/home'
+      });
+  }])
+
+;
