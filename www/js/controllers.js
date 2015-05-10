@@ -95,6 +95,10 @@ angular.module('starter.controllers', [])
     });
   };
 
+  $scope.hasUsage = function(leader) {
+    return leader.bytes && leader.bytes > 0;
+  };
+
   $scope.formatSizeUnits = formatSizeUnits;
 })
 
