@@ -50,14 +50,18 @@ angular.module('starter.services', [])
   };
 })
 .factory('Challenges', function(store, $resource, SERVER_URL) {
-  return $resource(SERVER_URL + 'challenges/:id');
+  return $resource(SERVER_URL + 'challenges/:id', null, {
+    'update': { method:'PUT' }
+  });
 })
 .factory('Invites', function(store, $resource, SERVER_URL) {
-  return $resource(SERVER_URL + 'invites/:id');
+  return $resource(SERVER_URL + 'invites/:id', null, {
+    'update': { method:'PUT' }
+  });
 })
 .factory('Users', function(store, $resource, SERVER_URL) {
   return $resource(SERVER_URL + 'users/:id', null, {
-    'me': { method: 'GET' },
+    'update': { method:'PUT' }
   });
 })
 ;

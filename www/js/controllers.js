@@ -86,7 +86,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('LeaderboardCtrl', function($scope, Users, formatSizeUnits) {
+.controller('LeaderboardCtrl', function($scope, Users, formatSizeUnits, trimPicture) {
   $scope.leaders = Users.query();
 
   $scope.doRefresh = function() {
@@ -100,6 +100,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.formatSizeUnits = formatSizeUnits;
+  $scope.trimPicture = trimPicture;
 })
 
 .controller('ChallengesCtrl', function($scope, Challenges, Invites) {
@@ -125,7 +126,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AccountCtrl', function($scope, auth, store, $location, Users, $http, SERVER_URL, formatSizeUnits) {
+.controller('AccountCtrl', function($scope, auth, store, $location, Users, $http, SERVER_URL, formatSizeUnits, trimPicture) {
   $scope.settings = {
     enableFriends: true
   };
@@ -150,5 +151,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.doRefresh();
+
+  $scope.trimPicture = trimPicture;
 });
 

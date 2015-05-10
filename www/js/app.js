@@ -197,4 +197,14 @@ angular.module('starter', [
   return bytes;
 })
 
+.constant("trimPicture", function(picture) {
+  if (!picture) return picture;
+  var match = picture.match(/^([^?]+)\?/);
+  if (match) {
+    return match[1];
+  } else {
+    return picture;
+  }
+})
+
 ;
