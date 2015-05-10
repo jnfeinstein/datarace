@@ -1,14 +1,18 @@
-var mongoose = require('mongoose'),
+var findOrCreate = require('mongoose-findorcreate'),
+    mongoose = require('mongoose'),
     Promise = require('bluebird'),
     Schema = mongoose.Schema;
 
 var ChallengeSchema = Schema({
+  name: String,
   creator: {type: Schema.ObjectId, ref: 'User'},
   users: [{type: Schema.ObjectId, ref: 'User'}],
   invites: [{type: Schema.ObjectId, ref: 'Invite'}],
   counters: [{type: Schema.ObjectId, ref: 'Counter'},],
   expiresAt: Date
 });
+
+ChallengeSchema.plugin(findOrCreate);
 
 var Challenge = mongoose.model('Challenge', ChallengeSchema);
 Promise.promisifyAll(Challenge);

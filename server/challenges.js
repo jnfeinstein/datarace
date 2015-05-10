@@ -13,8 +13,19 @@ router.get('/', function(req, res) {
     });
 });
 
-router.post('/new', function(req, res) {
+router.post('/', function(req, res) {
+  var name = req.body.name;
 
+  User.getFromReqAsync(req)
+    .then(function(user) {
+      return Challenge.findOrCreate({
+        creator: user._id,
+        name: name
+      });
+    })
+    .then(function(challenge) {
+      res.json(challenge);
+    });
 });
 
 module.exports = router;
