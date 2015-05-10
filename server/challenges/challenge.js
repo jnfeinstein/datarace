@@ -1,12 +1,4 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    schema = lib.Mongo.Schemas.Challenge;
 
-var schema = Schema({
-  creator: String,
-  participants: [String],
-  expiresAt: Date
-});
-
-var challenge = mongoose.model('Challenge', schema);
-
-module.exports = Promise.promisifyAll(challenge);
+module.exports = Promise.promisifyAll( mongoose.model('Challenge', schema) );

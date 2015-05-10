@@ -1,10 +1,11 @@
 global.Promise = require('bluebird');
+global.lib = require('../lib');
 
 var app = require('express')(),
     env = require('./env'),
     http = require('http').Server(app),
     jwt = require('express-jwt'),
-    lib = require('../lib'),
+    mongo = lib.Mongo,
     path = require("path"),
     static = require('express').static;
 
@@ -23,5 +24,7 @@ app.use( '/challenges', require('./challenges') );
 if ( !env.isProduction() ) {
   app.use(static('.'));
 }
+
+lib.Mongo.connect();
 
 http.listen(3000);

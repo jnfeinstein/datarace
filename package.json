@@ -22,6 +22,7 @@
     "bluebird": "^2.9.25",
     "express": "^4.12.3",
     "express-jwt": "^3.0.0",
+    "mongo-relation": "^0.5.4",
     "mongodb": "^2.0.31",
     "mongoose": "^4.0.2"
   },

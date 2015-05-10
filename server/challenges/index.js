@@ -1,5 +1,4 @@
 var router = require('express').Router(),
-    Challenge = require('./challenge'),
     User = require('../user');
 
 router.get('/', function(req, res) {
@@ -8,6 +7,10 @@ router.get('/', function(req, res) {
     .then(function(challenges) {
       res.send(challenges);
     });
+});
+
+router.post('/new', function(req, res) {
+
 });
 
 module.exports = router;

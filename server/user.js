@@ -1,3 +1,6 @@
+var mongoose = require('mongoose'),
+    schema = lib.Mongo.Schemas.User;
+
 var Auth0 = Promise.promisifyAll( require('auth0') );
 
 var api = new Auth0({
@@ -27,6 +30,8 @@ User.prototype.fetch = function() {
     });
 }
 
+
+
 User.prototype.error = function() {
   return this.error;
 }
@@ -35,4 +40,4 @@ User.fromReq = function(req) {
   return new User(req.user.sub);
 }
 
-module.exports = User;
+module.exports = Promise.promisifyAll( mongoose.model('User', schema) );
