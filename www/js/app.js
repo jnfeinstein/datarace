@@ -9,7 +9,6 @@ angular.module('starter', [
                'ionic',
                'starter.controllers',
                'starter.services',
-               'smoothie-directive',
                'ionic.service.core',
                'auth0',
                'angular-storage',
