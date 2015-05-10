@@ -1,6 +1,7 @@
 <div ng-controller="DownloadController">
   <form novalidate>
     Running: {{total}}
+    Speed: {{average.toFixed()}}
 
     <fieldset ng-disabled="running">
       <label>
