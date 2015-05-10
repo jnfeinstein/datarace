@@ -42,9 +42,9 @@ Promise.promisifyAll(User);
 Promise.promisifyAll(User.prototype);
 
 User.getFromReqAsync = function(req) {
-  return User.findById(req.user.sub)
-    .then(function(users) {
-      return users[0];
+  return User.findById( req.user.sub.replace('auth0|','') )
+    .then(function(user) {
+      return users;
     });
 }
 
