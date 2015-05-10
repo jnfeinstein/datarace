@@ -27,7 +27,9 @@ angular.module('starter.controllers', [])
   $scope.login();
 })
 
-.controller('HomeCtrl', function($scope, $http, $q, Invites, SERVER_URL, formatSizeUnits) {
+.controller('HomeCtrl', function($scope, $http, $q, $interval, Invites, SERVER_URL, formatSizeUnits) {
+  var bytesToReport, reportInterval;
+
   $scope.invites = Invites.query();
   $scope.downloading = false;
 
@@ -39,7 +41,8 @@ angular.module('starter.controllers', [])
       $scope.canceler.resolve();
       $scope.xhr = null;
       $scope.canceler = null;
-      $scope.report();
+      $interval.cancel(reportInterval);
+      report();
     }
   };
 
@@ -48,11 +51,16 @@ angular.module('starter.controllers', [])
     $scope.total = 0;
     $scope.time = 0;
     $scope.average = 0;
+    bytesToReport = 0;
+    reportInterval = $interval(function() {
+      report();
+    }, 5000);
     download();
   };
 
-  $scope.report = function() {
-    $http.post(SERVER_URL + "counters", {bytes: $scope.total});
+  function report() {
+    $http.post(SERVER_URL + "counters", {bytes: bytesToReport});
+    bytesToReport = 0;
   };
 
   $scope.getAverage = function() {
@@ -66,7 +74,9 @@ angular.module('starter.controllers', [])
     var cacheBuster = "?cache=" + new Date().getTime();
     var url = "http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js" + cacheBuster;
     $scope.canceler = $q.defer();
-    $scope.xhr = $http.jsonp(url, {timeout: $scope.canceler}).success(downloadCallback).error(downloadCallback);
+    $scope.xhr = $http.jsonp(url, {timeout: $scope.canceler})
+      .success(downloadCallback)
+      .error(downloadCallback);
   }
 
   function downloadCallback(data, status, headers, config) {
@@ -76,6 +86,7 @@ angular.module('starter.controllers', [])
     var endTime = new Date().getTime();
 
     var fileSize = files[file];
+    bytesToReport += fileSize;
     $scope.total = $scope.total + fileSize;
     $scope.humanTotal = formatSizeUnits($scope.total);
     $scope.time = $scope.time + (endTime - startTime);
