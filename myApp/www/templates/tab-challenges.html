@@ -1,0 +1,20 @@
+<ion-view view-title="Challenges">
+  <ion-content>
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="challenge in challenges" type="item-text-wrap">
+        <img ng-src="{{challenge.face}}">
+        <h2>{{challenge.name}}</h2>
+        <p>{{challenge.amount}}</p>
+
+        <ion-option-button class="button-balanced" ng-click="acceptChallenge(challenge)">
+          Accept
+        </ion-option-button>
+        <ion-option-button class="button-assertive" ng-click="ignoreChallenge(challenge)">
+          Ignore
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
