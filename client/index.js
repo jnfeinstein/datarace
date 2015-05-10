@@ -9,37 +9,14 @@ angular.module('app', [
   'angular-jwt',
   'angular-storage',
   'authentication',
+  'home',
   'ngRoute',
   'templates',
-  'ui.bootstrap'
-])
+  'ui.bootstrap',
+  'widgets'
+]);
 
-.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-      when('/home', {
-        templateUrl: 'home/index.html'
-      }).
-      otherwise({
-        redirectTo: '/home'
-      });
-  }])
-
-.config(['authProvider', '$routeProvider', '$httpProvider', 'jwtInterceptorProvider',
-  function(authProvider, $routeProvider, $httpProvider, jwtInterceptorProvider) {
-    jwtInterceptorProvider.tokenGetter = ['AuthTools', function(AuthTools) {
-      return AuthTools.token();
-    }];
-    $httpProvider.interceptors.push('jwtInterceptor');
-  }])
-
-.controller.apply(this, require("./downloader/DownloadController.js"))
-.directive("downloader", function() {
-  return {
-    templateUrl: "downloader/index.html"
-  }
-})
-
-;
-
+require('./setup');
 require('./authentication');
+require('./home');
+require('./widgets');

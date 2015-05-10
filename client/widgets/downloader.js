@@ -1,9 +1,7 @@
-var files = {
-  "http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone.js": 17723,
-  "http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js": 241976,
-};
+angular.module('widgets')
 
-module.exports = ["DownloadController", ["$scope", "$http", function($scope, $http) {
+.controller('downloaderCtrl', ["$scope", "$http",
+  function($scope, $http) {
     $scope.limit = 5;
     $scope.running = false;
     $scope.total = 0;
@@ -50,5 +48,13 @@ module.exports = ["DownloadController", ["$scope", "$http", function($scope, $ht
         $scope.report();
       }
     }
-  }]
-];
+  }])
+
+.directive("downloader", function() {
+  return {
+    controller: 'downloaderCtrl',
+    templateUrl: "widgets/downloader.html"
+  }
+})
+
+;
