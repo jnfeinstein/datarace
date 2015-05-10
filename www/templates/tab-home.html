@@ -10,14 +10,12 @@
 </style>
 
 <ion-view view-title="Home">
-  <ion-content class="padding">
+  <ion-content class="padding" class="homeTab">
     <button ng-click="toggleDownload()" ng-class="{'button': true, 'buttonRun': true, 'button-assertive': downloading, 'button-balanced': !downloading}">
       {{downloading ? "Stop" : "Start"}} download
     </button>
 
-    <div class="center-all">
-      <h2>{{humanTotal}}</h2>
-    </div>
+    <div class="humanTotal" style="font-size:30px; font-weight:bold; text-align:center; margin-top: 100px;">{{humanTotal}}</div>
 
   </ion-content>
 </ion-view>
