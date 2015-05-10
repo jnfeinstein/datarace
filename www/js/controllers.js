@@ -86,17 +86,16 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('LeaderboardCtrl', function($scope, Leaders) {
-  $scope.leaders = Leaders.all();
-  $scope.remove = function(chat) {
-    Leaders.remove(chat);
-  };
+.controller('LeaderboardCtrl', function($scope, Users, formatSizeUnits) {
+  $scope.leaders = Users.query();
 
   $scope.doRefresh = function() {
     setTimeout(function() {
       $scope.$broadcast('scroll.refreshComplete');
     }, 1000);
   };
+
+  $scope.formatSizeUnits = formatSizeUnits;
 })
 
 .controller('ChallengesCtrl', function($scope, Challenges, Invites) {
