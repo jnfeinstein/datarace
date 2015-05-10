@@ -32,7 +32,6 @@ setInterval(function() {
     })
     .map(function(user) {
       user.newAuth = false;
-      debugger
       return user.saveAsync();
     });
 }, 5000);
