@@ -59,4 +59,10 @@ angular.module('starter.services', [])
     'update': { method:'PUT' }
   });
 })
+.factory('Users', function(store, $resource, SERVER_URL) {
+  return $resource(SERVER_URL + 'users/:id', null, {
+    'me': { method: 'GET' },
+    'update': { method:'PUT' }
+  });
+})
 ;

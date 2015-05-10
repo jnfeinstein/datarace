@@ -2,11 +2,29 @@
   .logoutButton {
     width: 100%;
   }
+  .profilePic {
+    height: 100px;
+    width: 100px;
+    float: left;
+  }
+  .profileName {
+    font-weight: bold;
+    font-size: 24px;
+    float: right;
+  }
 </style>
 
 <ion-view view-title="Account">
   <ion-content class="padding">
-    <h1>{{profile.nickname}}</h1>
-    <button type="button" class="button button-assertive logoutButton" ng-click="logout()"/>Log out</button>
+    <div class="card">
+      <div class="item item-body">
+        <img class="profilePic" ng-src="{{me.picture}}">
+        <span class="profileName">{{profile.nickname}}</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <button type="button" class="button button-assertive logoutButton" ng-click="logout()"/>Log out</button>
+    </div>
   </ion-content>
 </ion-view>

@@ -121,12 +121,17 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AccountCtrl', function($scope, auth, store, $location) {
+.controller('AccountCtrl', function($scope, auth, store, $location, Users, $http, SERVER_URL) {
   $scope.settings = {
     enableFriends: true
   };
 
   $scope.profile = auth.profile;
+  $scope.me = {};
+
+  $http.get(SERVER_URL + "users/me").success(function(data) {
+    $scope.me = data;
+  });
 
   $scope.logout = function() {
     auth.signout();
