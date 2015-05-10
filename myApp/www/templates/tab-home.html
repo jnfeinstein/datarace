@@ -1,34 +1,31 @@
+<style>
+  .challengeName {
+    padding: 4px;
+    display: inline-block;
+  }
+
+  .buttonRun {
+    width: 100%;
+  }
+</style>
+
 <ion-view view-title="Home">
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
+    <div class="card" ng-if="pendingChallenges.length > 0">
+      <div class="item item-divider">{{pendingChallenges.length}} Challenges</div>
       <div class="item item-body">
-        <div>
-          Challenge request from <b>Joel</b>
-          <div class="button-bar">
-            <a class="button">Accept</a>
-            <a class="button">Ignore</a>
-          </div>
-        </div>
+        {{pendingChallengeNames}}
       </div>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          Use <b>20 MB</b> tomorrow
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item range range-positive">
-        <i class="icon ion-ios-sunny-outline"></i>
-        <input type="range" name="limit" min="1" max="100" value="5">
-        <i class="icon ion-ios-sunny"></i>
-      </div>
-      <div class="item">
-        <button class="button button-calm">Run</button>
-      </div>
-    </div>
+    <button ng-click="toggleDownload()" ng-class="{'button': true, 'buttonRun': true, 'button-assertive': downloading, 'button-balanced': !downloading}">
+      {{downloading ? "Stop" : "Start"}} download
+    </button>
+
+    <h2>{{total}}</h2>
+
+    <smoothie-grid width="400" height="200" ng-if="downloading">
+      <time-series callback="getAverage()" color="blue" rate="100"></time-series>
+    </smoothie-grid>
+
   </ion-content>
 </ion-view>
