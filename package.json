@@ -5,7 +5,8 @@
   "scripts": {
     "compile": "gulp",
     "test": "gulp test",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "debug": "node debug server/index.js"
   },
   "author": "Joel Feinstein",
   "dependencies": {
@@ -22,9 +23,9 @@
     "bluebird": "^2.9.25",
     "express": "^4.12.3",
     "express-jwt": "^3.0.0",
-    "mongo-relation": "^0.5.4",
     "mongodb": "^2.0.31",
-    "mongoose": "^4.0.2"
+    "mongoose": "^4.0.2",
+    "mongoose-findorcreate": "^0.1.2"
   },
   "devDependencies": {
     "brfs": "^1.4.0",
@@ -37,6 +38,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "merge-stream": "^0.1.7",
+    "node-inspector": "^0.10.0",
     "packageify": "^0.2.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"

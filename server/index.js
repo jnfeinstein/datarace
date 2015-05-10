@@ -1,4 +1,3 @@
-global.Promise = require('bluebird');
 global.lib = require('../lib');
 
 var app = require('express')(),
@@ -24,6 +23,18 @@ app.use( '/challenges', require('./challenges') );
 if ( !env.isProduction() ) {
   app.use(static('.'));
 }
+
+// Log all errors
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  next(err);
+});
+
+// Generic error handler
+app.use(function errorHandler(err, req, res, next) {
+  res.status(500);
+  res.render('error', { error: err });
+});
 
 lib.Mongo.connect();
 

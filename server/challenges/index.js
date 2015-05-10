@@ -1,11 +1,14 @@
 var router = require('express').Router(),
-    User = require('../user');
+    Challenge = lib.models.Challenge,
+    User = lib.models.User;
 
 router.get('/', function(req, res) {
-  var user = User.fromReq(req);
-  Challenge.findAsync({ participants: user.id })
-    .then(function(challenges) {
-      res.send(challenges);
+  User.getFromReqAsync(req)
+    .then(function(user) {
+      return user.populateAsync('challenges');
+    })
+    .then(function(user) {
+      res.json(user.challenges);
     });
 });
 
