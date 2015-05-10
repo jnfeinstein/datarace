@@ -17,6 +17,7 @@ angular.module('starter', [
 ])
 
 .constant("SERVER_URL", "http://localhost:3000/")
+//.constant("SERVER_URL", "http://datarace.net/")
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
