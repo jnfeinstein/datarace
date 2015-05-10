@@ -1,0 +1,31 @@
+<style>
+  .challengeName {
+    padding: 4px;
+    display: inline-block;
+  }
+
+  .buttonRun {
+    width: 100%;
+  }
+</style>
+
+<ion-view view-title="Home">
+  <ion-content class="padding">
+    <div class="card" ng-if="pendingChallenges.length > 0">
+      <div class="item item-divider">{{pendingChallenges.length}} Challenges</div>
+      <div class="item item-body">
+        {{pendingChallengeNames}}
+      </div>
+    </div>
+    <button ng-click="toggleDownload()" ng-class="{'button': true, 'buttonRun': true, 'button-assertive': downloading, 'button-balanced': !downloading}">
+      {{downloading ? "Stop" : "Start"}} download
+    </button>
+
+    <h2>{{total}}</h2>
+
+    <smoothie-grid width="250" height="200" ng-if="downloading" millisPerLine="250" verticalSections="6" lineColor="rgb(60, 0, 0)">
+      <time-series callback="getAverage()" color="blue" rate="100"></time-series>
+    </smoothie-grid>
+
+  </ion-content>
+</ion-view>
