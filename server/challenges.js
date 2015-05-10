@@ -16,15 +16,22 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) {
   var name = req.body.name;
 
+  var reqUser;
+
   User.getFromReqAsync(req)
     .then(function(user) {
-      return Challenge.findOrCreate({
+      reqUser = user;
+      return Challenge.findOrCreateAsync({
         creator: user._id,
         name: name
       });
     })
     .then(function(challenge) {
-      res.json(challenge);
+      challenge[0].users = [reqUser._id];
+      return challenge[0].saveAsync();
+    })
+    .then(function(challenge) {
+      res.json(challenge[0]);
     });
 });
 

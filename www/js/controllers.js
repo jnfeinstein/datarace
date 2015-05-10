@@ -113,27 +113,45 @@ angular.module('starter.controllers', [])
   $scope.trimPicture = trimPicture;
 })
 
-.controller('ChallengesCtrl', function($scope, Challenges, Invites) {
-  fetch();
+.controller('ChallengesCtrl', function($scope, $ionicModal, $q, Challenges, Invites) {
+  $scope.name = '';
 
-  $scope.acceptChallenge = function(chat) {
-    Challenges.remove(chat);
+  $ionicModal.fromTemplateUrl('templates/new-challenge.html', function(modal) {
+    $scope.modal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  $scope.addChallenge = function(name) {
+    Challenges.save({ name: name })
+      .$promise.then(function() {
+        $scope.modal.hide();
+      });
+  }
+
+  $scope.leaveChallenge = function(challenge) {
+
+  }
+
+  $scope.acceptInvite = function(invite) {
+    //Challenges.remove(chat);
   };
 
-  $scope.ignoreChallenge = function(chat) {
-    Challenges.remove(chat);
+  $scope.ignoreInvite = function(invite) {
+    //Challenges.remove(chat);
   };
 
   $scope.doRefresh = function() {
-    fetch(function() {
-      $scope.$broadcast('scroll.refreshComplete');
-    });
+    $q.all( Challenges.query().$promise, Invites.query().$promise )
+      .then(function(rez) {
+        $scope.challenges = rez[0];
+        $scope.invites = rez[1];
+        $scope.$broadcast('scroll.refreshComplete');
+      });
   };
 
-  function fetch(callback) {
-    $scope.invites = Invites.query();
-    $scope.challenges = Challenges.query(callback);
-  }
+  $scope.doRefresh();
 })
 
 .controller('AccountCtrl', function($scope, auth, store, $location, Users, $http, SERVER_URL, formatSizeUnits, trimPicture) {
