@@ -67,7 +67,7 @@ angular.module('starter.controllers', [])
     var cacheBuster = "?cache=" + new Date().getTime();
     var url = "http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js" + cacheBuster;
     $scope.canceler = $q.defer();
-    $scope.xhr = $http.get(url, {timeout: $scope.canceler}).success(downloadCallback).error(downloadCallback);
+    $scope.xhr = $http.jsonp(url, {timeout: $scope.canceler}).success(downloadCallback).error(downloadCallback);
   }
 
   function downloadCallback(data, status, headers, config) {
