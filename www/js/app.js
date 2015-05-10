@@ -16,8 +16,19 @@ angular.module('starter', [
                'ngResource',
 ])
 
-.constant("SERVER_URL", "http://localhost:3000/")
-//.constant("SERVER_URL", "http://datarace.net/")
+.factory("SERVER_URL", ['$location',
+  function($location) {
+    var host = $location.host(),
+        port = $location.port();
+
+    var url = "http://" + host;
+
+    if (port) {
+      url += ":" + port;
+    }
+
+    return url + "/";
+  }])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
