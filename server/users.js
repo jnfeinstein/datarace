@@ -23,4 +23,17 @@ router.get('/me', function(req, res) {
     });
 });
 
+setInterval(function() {
+  User.findAsync()
+    .then(function(users) {
+      return users.map(function(user) {
+        return user.fetchAsync();
+      });
+    })
+    .map(function(user) {
+      console.log(user);
+      return user.saveAsync();
+    });
+}, 30000);
+
 module.exports = router;

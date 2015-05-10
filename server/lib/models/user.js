@@ -19,12 +19,15 @@ var UserSchema = Schema({
 UserSchema.plugin(findOrCreate);
 
 UserSchema.methods.fetchAsync = function() {
-  return api.getUserAsync(this.authId)
+  return auth.getUserAsync(this.authId)
     .bind(this)
     .then(function(user) {
+      var self = this;
+
       ['email', 'picture', 'name', 'nickname'].forEach(function(prop) {
-        this[prop] = user[prop];
+        self[prop] = user[prop];
       });
+
       return this;
     })
     .catch(function(error) {
