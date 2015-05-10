@@ -5,7 +5,16 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'smoothie-directive', 'ionic.service.core'])
+angular.module('starter', [
+               'ionic',
+               'starter.controllers',
+               'starter.services',
+               'smoothie-directive',
+               'ionic.service.core',
+               'auth0',
+               'angular-storage',
+               'angular-jwt',
+])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -21,6 +30,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
+.run(function($rootScope, auth, store, jwtHelper, $location) {
+  // This events gets triggered on refresh or URL change
+  $rootScope.$on('$locationChangeStart', function() {
+    if (!auth.isAuthenticated) {
+      var token = store.get('token');
+      if (token) {
+        if (!jwtHelper.isTokenExpired(token)) {
+          auth.authenticate(store.get('profile'), token);
+        } else {
+          // Either show Login page or use the refresh token to get a new idToken
+          $location.path('/');
+        }
+      }
+    }
+  });
+
+  // This hooks all auth events to check everything as soon as the app starts
+  auth.hookEvents();
+})
+
 .config(['$ionicAppProvider', function($ionicAppProvider) {
   // Identify app
   $ionicAppProvider.identify({
@@ -31,7 +60,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 }])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function (authProvider, $httpProvider, jwtInterceptorProvider) {
+  // ...
+
+  jwtInterceptorProvider.tokenGetter = function(store, jwtHelper, auth) {
+    var idToken = store.get('token');
+    var refreshToken = store.get('refreshToken');
+    // If no token return null
+    if (!idToken || !refreshToken) {
+      return null;
+    }
+    // If token is expired, get a new one
+    if (jwtHelper.isTokenExpired(idToken)) {
+      return auth.refreshIdToken(refreshToken).then(function(idToken) {
+        store.set('token', idToken);
+        return idToken;
+      });
+    } else {
+      return idToken;
+    }
+  };
+
+  $httpProvider.interceptors.push('jwtInterceptor');
+  // ...
+})
+
+.config(function($stateProvider, $urlRouterProvider, authProvider, $httpProvider, jwtInterceptorProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -47,6 +101,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   // Each tab has its own nav history stack:
+  //
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginCtrl',
+  })
 
   .state('tab.home', {
     url: '/home',
@@ -55,6 +115,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: 'templates/tab-home.html',
         controller: 'HomeCtrl'
       }
+    },
+    data: {
+      // This tells Auth0 that this state requires the user to be logged in.
+      // If the user isn't logged in and he tries to access this state
+      // he'll be redirected to the login page
+      requiresLogin: true
     }
   })
 
@@ -65,18 +131,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           templateUrl: 'templates/tab-leaderboard.html',
           controller: 'LeaderboardCtrl'
         }
+      },
+      data: {
+        // This tells Auth0 that this state requires the user to be logged in.
+        // If the user isn't logged in and he tries to access this state
+        // he'll be redirected to the login page
+        requiresLogin: true
       }
     })
 
   .state('tab.challenges', {
-      url: '/challenges',
-      views: {
-        'tab-challenges': {
-          templateUrl: 'templates/tab-challenges.html',
-          controller: 'ChallengesCtrl'
-        }
+    url: '/challenges',
+    views: {
+      'tab-challenges': {
+        templateUrl: 'templates/tab-challenges.html',
+        controller: 'ChallengesCtrl'
       }
-    })
+    },
+    data: {
+      // This tells Auth0 that this state requires the user to be logged in.
+      // If the user isn't logged in and he tries to access this state
+      // he'll be redirected to the login page
+      requiresLogin: true
+    }
+  })
 
   .state('tab.account', {
     url: '/account',
@@ -85,10 +163,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: 'templates/tab-account.html',
         controller: 'AccountCtrl'
       }
+    },
+    data: {
+      // This tells Auth0 that this state requires the user to be logged in.
+      // If the user isn't logged in and he tries to access this state
+      // he'll be redirected to the login page
+      requiresLogin: true
     }
   });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');
+
+  authProvider.init({
+    domain: 'datarace.auth0.com',
+    clientID: 'anDND1WDueNYUpAyiwp4JN5sJVfZGsfC',
+    //callbackURL: location.href,
+    loginState: 'login'
+  });
 
 });

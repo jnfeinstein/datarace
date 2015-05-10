@@ -6,6 +6,25 @@ var files = {
 
 angular.module('starter.controllers', [])
 
+.controller('LoginCtrl', function LoginCtrl(store, $scope, $location, auth) {
+  $scope.login = function() {
+    auth.signin({
+      authParams: {
+        scope: 'openid offline_access',
+        device: 'Mobile device'
+      }
+    }, function(profile, token, accessToken, state, refreshToken) {
+      // Success callback
+      store.set('profile', profile);
+      store.set('token', token);
+      store.set('refreshToken', refreshToken);
+      $location.path('/');
+    }, function() {
+      // Error callback
+    });
+  }
+})
+
 .controller('HomeCtrl', function($scope, $http, $q, Challenges) {
   $scope.pendingChallenges = Challenges.all('pending');
   $scope.pendingChallengeNames = _.pluck($scope.pendingChallenges, "name").join(", ");
@@ -97,9 +116,11 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('AccountCtrl', function($scope, auth) {
   $scope.settings = {
     enableFriends: true
   };
+
+  $scope.profile = auth.profile;
 });
 
