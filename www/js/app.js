@@ -18,7 +18,7 @@ angular.module('starter', [
 
 .factory("SERVER_URL", ['$location',
   function($location) {
-    var host = $location.host(),
+    var host = $location.host() || "datarace.net",
         port = $location.port();
 
     var url = "http://" + host;
