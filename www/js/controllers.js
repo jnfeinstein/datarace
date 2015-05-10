@@ -113,7 +113,7 @@ angular.module('starter.controllers', [])
   $scope.trimPicture = trimPicture;
 })
 
-.controller('ChallengesCtrl', function($scope, $ionicModal, $q, Challenges, Invites) {
+.controller('ChallengesCtrl', function($scope, $ionicModal, $q, Challenges, Invites, trimPicture) {
   $scope.name = '';
 
   $ionicModal.fromTemplateUrl('templates/new-challenge.html', function(modal) {
@@ -150,6 +150,8 @@ angular.module('starter.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
       });
   };
+
+  $scope.trimPicture = trimPicture;
 
   $scope.doRefresh();
 })
