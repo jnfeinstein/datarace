@@ -127,11 +127,8 @@ angular.module('starter.controllers', [])
   };
 
   $scope.profile = auth.profile;
-  $scope.me = {};
 
-  $http.get(SERVER_URL + "users/me").success(function(data) {
-    $scope.me = data;
-  });
+  $scope.me = {};
 
   $scope.logout = function() {
     auth.signout();
@@ -139,5 +136,14 @@ angular.module('starter.controllers', [])
     store.remove('token');
     $location.path('/');
   };
+
+  $scope.doRefresh = function() {
+    $http.get(SERVER_URL + "users/me").success(function(data) {
+      $scope.me = data;
+      $scope.$broadcast('scroll.refreshComplete');
+    });
+  };
+
+  $scope.doRefresh();
 });
 
