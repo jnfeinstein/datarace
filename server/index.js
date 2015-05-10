@@ -31,6 +31,9 @@ app.use( '/counters', require('./counters') );
 app.use( '/invites', jwtCheck);
 app.use( '/invites', require('./invites') );
 
+app.use( '/users', jwtCheck);
+app.use( '/users', require('./users') );
+
 if ( !env.isProduction() ) {
   app.use(static('www'));
 }
