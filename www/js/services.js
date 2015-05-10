@@ -49,54 +49,8 @@ angular.module('starter.services', [])
     }
   };
 })
-.factory('Challenges', function() {
-  // Might use a resource here that returns a JSON array
-
-  // Some fake testing data
-  var challenges = [{
-    id: 0,
-    name: 'Joel F',
-    amount: '200 MB',
-    status: 'pending',
-    face: 'https://pbs.twimg.com/profile_images/514549811765211136/9SgAuHeY.png'
-  }, {
-    id: 1,
-    name: 'Stephen D',
-    amount: '1 GB',
-    status: 'pending',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }, {
-    id: 2,
-    name: 'Alex K',
-    amount: '1 GB',
-    status: 'won',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }, {
-    id: 3,
-    name: 'Stephen D',
-    amount: '240 GB',
-    status: 'lost',
-    face: 'https://avatars3.githubusercontent.com/u/11214?v=3&s=460'
-  }];
-
-  return {
-    all: function(status) {
-      if (status) {
-        return _.where(challenges, {status: status});
-      }
-      return challenges;
-    },
-    remove: function(challenge) {
-      challenges.splice(challenges.indexOf(challenge), 1);
-    },
-    get: function(id) {
-      id = parseInt(id, 10);
-      for (var i = 0; i < challenges.length; i++) {
-        if (challenges[i].id === id) {
-          return challenges[i];
-        }
-      }
-      return null;
-    }
-  };
+.factory('Challenges', function(store, $resource) {
+  return $resource('http://localhost:3000/challenges/:id', null, {
+    'update': { method:'PUT' }
+  });
 });

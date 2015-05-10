@@ -14,6 +14,7 @@ angular.module('starter', [
                'auth0',
                'angular-storage',
                'angular-jwt',
+               'ngResource',
 ])
 
 .run(function($ionicPlatform) {

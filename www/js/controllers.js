@@ -28,7 +28,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('HomeCtrl', function($scope, $http, $q, Challenges) {
-  $scope.pendingChallenges = Challenges.all('pending');
+  var challenges = Challenges.query();
+  $scope.pendingChallenges = _.where(challenges, {status: 'pending'});
+
   $scope.pendingChallengeNames = _.pluck($scope.pendingChallenges, "name").join(", ");
   $scope.downloading = false;
 
@@ -100,8 +102,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ChallengesCtrl', function($scope, Challenges) {
-  $scope.challenges = Challenges.all();
-  $scope.pendingChallenges = Challenges.all('pending');
+  fetch();
 
   $scope.acceptChallenge = function(chat) {
     Challenges.remove(chat);
@@ -112,10 +113,15 @@ angular.module('starter.controllers', [])
   };
 
   $scope.doRefresh = function() {
-    setTimeout(function() {
+    fetch(function() {
       $scope.$broadcast('scroll.refreshComplete');
-    }, 1000);
+    });
   };
+
+  function fetch(callback) {
+    $scope.challenges = Challenges.query(callback);
+    $scope.pendingChallenges = _.where($scope.challenges, {status: 'pending'});
+  }
 })
 
 .controller('AccountCtrl', function($scope, auth, store, $location) {
