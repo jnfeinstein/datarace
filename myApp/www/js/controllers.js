@@ -70,6 +70,12 @@ angular.module('starter.controllers', [])
   $scope.remove = function(chat) {
     Leaders.remove(chat);
   };
+
+  $scope.doRefresh = function() {
+    setTimeout(function() {
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 1000);
+  };
 })
 
 .controller('ChallengesCtrl', function($scope, Challenges) {
@@ -79,8 +85,15 @@ angular.module('starter.controllers', [])
   $scope.acceptChallenge = function(chat) {
     Challenges.remove(chat);
   };
+
   $scope.ignoreChallenge = function(chat) {
     Challenges.remove(chat);
+  };
+
+  $scope.doRefresh = function() {
+    setTimeout(function() {
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 1000);
   };
 })
 
