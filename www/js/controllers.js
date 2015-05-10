@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.doRefresh = function() {
-    $q.all( Challenges.query().$promise, Invites.query().$promise )
+    $q.all([ Challenges.query().$promise, Invites.query().$promise ])
       .then(function(rez) {
         $scope.challenges = rez[0];
         $scope.invites = rez[1];

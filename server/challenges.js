@@ -28,6 +28,7 @@ router.post('/', function(req, res) {
     })
     .then(function(challenge) {
       challenge[0].users = [reqUser._id];
+      challenge[0].picture = reqUser.picture;
       return challenge[0].saveAsync();
     })
     .then(function(challenge) {

@@ -5,6 +5,7 @@ var findOrCreate = require('mongoose-findorcreate'),
 
 var ChallengeSchema = Schema({
   name: String,
+  picture: String,
   creator: {type: Schema.ObjectId, ref: 'User'},
   users: [{type: Schema.ObjectId, ref: 'User'}],
   expiresAt: Date
