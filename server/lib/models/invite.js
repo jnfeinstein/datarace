@@ -6,7 +6,9 @@ var findOrCreate = require('mongoose-findorcreate'),
 var InviteSchema = Schema({
   creator: {type: Schema.ObjectId, ref: 'User'},
   user: {type: Schema.ObjectId, ref: 'User'},
-  challenge: { type: Schema.ObjectId, ref: 'Challenge'}
+  challenge: { type: Schema.ObjectId, ref: 'Challenge'},
+  name: String,
+  picture: String
 });
 
 InviteSchema.plugin(findOrCreate);

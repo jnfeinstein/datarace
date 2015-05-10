@@ -36,7 +36,9 @@ router.post('/', function(req, res) {
         Invite.findOrCreateAsync({
           creator: reqUser._id,
           user: user,
-          challenge: challenge[0]._id
+          challenge: challenge[0]._id,
+          picture: challenge[0].picture,
+          name: challenge[0].name
         });
       });
 

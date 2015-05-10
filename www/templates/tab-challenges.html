@@ -18,8 +18,8 @@
     </ion-list>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="invite in invites" type="item-text-wrap">
-        <img ng-src="{{ invite.creator.picture }}">
-        <h2>{{invites.name}}</h2>
+        <img ng-src="{{ trimPicture(invite.picture) }}">
+        <h2>{{invite.name}}</h2>
 
         <ion-option-button class="button-balanced" ng-click="acceptInvite(invite)">
           Accept

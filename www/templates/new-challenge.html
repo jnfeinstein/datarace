@@ -12,7 +12,7 @@
       </div>
       <ion-list>
         <ion-checkbox class="item" ng-model="user.selected" ng-repeat="user in users">
-          <img style="max-height:42px;" ng-src="{{ user.picture }}">
+          <img style="max-height:42px;" ng-src="{{ trimPicture(user.picture) }}">
           {{ user.nickname }}
         </ion-checkbox>
       </ion-list>
