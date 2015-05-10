@@ -11,9 +11,6 @@
 
 <ion-view view-title="Home">
   <ion-content class="padding">
-    <div class="card" ng-if="pendingChallenges.length > 0">
-      <div class="item item-divider">{{invites.length}} Challenges</div>
-    </div>
     <button ng-click="toggleDownload()" ng-class="{'button': true, 'buttonRun': true, 'button-assertive': downloading, 'button-balanced': !downloading}">
       {{downloading ? "Stop" : "Start"}} download
     </button>
