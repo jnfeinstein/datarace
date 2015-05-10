@@ -13,8 +13,7 @@ router.post('/', function(req, res) {
       reqUser = user;
 
       return Counter.findAsync({
-        user: user._id,
-        expired: false
+        user: user._id
       });
     })
     .then(function(counters) {

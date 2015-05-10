@@ -1,6 +1,7 @@
 var router = require('express').Router(),
     lib = require('./lib'),
     Challenge = lib.models.Challenge,
+    Counter = lib.models.Counter,
     Invite = lib.models.Invite,
     User = lib.models.User;
 
@@ -31,6 +32,11 @@ router.post('/', function(req, res) {
     .then(function(challenge) {
       challenge[0].users = [reqUser._id];
       challenge[0].picture = reqUser.picture;
+
+      Counter.createAsync({
+        challenge: challenge._id,
+        user: reqUser._id
+      });
 
       users.forEach(function(user) {
         Invite.findOrCreateAsync({
