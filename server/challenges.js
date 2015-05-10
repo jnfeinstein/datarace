@@ -1,6 +1,7 @@
 var router = require('express').Router(),
     lib = require('./lib'),
     Challenge = lib.models.Challenge,
+    Invite = lib.models.Invite,
     User = lib.models.User;
 
 router.get('/', function(req, res) {
@@ -14,7 +15,8 @@ router.get('/', function(req, res) {
 });
 
 router.post('/', function(req, res) {
-  var name = req.body.name;
+  var name = req.body.name,
+      users = req.body.users;
 
   var reqUser;
 
@@ -29,6 +31,15 @@ router.post('/', function(req, res) {
     .then(function(challenge) {
       challenge[0].users = [reqUser._id];
       challenge[0].picture = reqUser.picture;
+
+      users.forEach(function(user) {
+        Invite.findOrCreateAsync({
+          creator: reqUser._id,
+          user: user,
+          challenge: challenge[0]._id
+        });
+      });
+
       return challenge[0].saveAsync();
     })
     .then(function(challenge) {

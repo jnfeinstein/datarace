@@ -113,8 +113,14 @@ angular.module('starter.controllers', [])
   $scope.trimPicture = trimPicture;
 })
 
-.controller('ChallengesCtrl', function($scope, $ionicModal, $q, Challenges, Invites, trimPicture) {
-  $scope.name = '';
+.controller('ChallengesCtrl', function($scope, $ionicModal, $q, Challenges, Invites, Users, auth, trimPicture) {
+  $scope.challenges = [];
+  $scope.invites = [];
+  Users.query().$promise.then(function(users) {
+    $scope.users = users.filter(function(user) {
+      return user._id != auth.profile.user_id.replace('auth0|', '');
+    });
+  });
 
   $ionicModal.fromTemplateUrl('templates/new-challenge.html', function(modal) {
     $scope.modal = modal;
@@ -124,8 +130,20 @@ angular.module('starter.controllers', [])
   });
 
   $scope.addChallenge = function(name) {
-    Challenges.save({ name: name })
-      .$promise.then(function() {
+    $scope.name = '';
+    Challenges.save({
+      name: name,
+      users: $scope.users.filter(function(user) {
+        return user.selected;
+      }).map(function(user) {
+        return user._id;
+      })
+    })
+      .$promise.then(function(challenge) {
+        $scope.users.forEach(function(user) {
+          user.selected = false;
+        });
+        $scope.challenges.push(challenge);
         $scope.modal.hide();
       });
   }

@@ -10,6 +10,12 @@
           <input type="text" placeholder="Challenge Name" name="content" ng-model="name"/>
         </label>
       </div>
+      <ion-list>
+        <ion-checkbox class="item" ng-model="user.selected" ng-repeat="user in users">
+          <img style="max-height:42px;" ng-src="{{ user.picture }}">
+          {{ user.nickname }}
+        </ion-checkbox>
+      </ion-list>
       <div class="row">
         <button type="submit" class="button button-block button-positive">Save</button>
       </div>
