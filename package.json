@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Data race to the finish!",
   "scripts": {
+    "compile": "gulp",
     "test": "gulp test",
     "start": "node server/index.js"
   },
