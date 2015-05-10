@@ -27,7 +27,7 @@ angular.module('starter.controllers', [])
   $scope.login();
 })
 
-.controller('HomeCtrl', function($scope, $http, $q, Challenges) {
+.controller('HomeCtrl', function($scope, $http, $q, Challenges, SERVER_URL) {
   var challenges = Challenges.query();
   $scope.pendingChallenges = _.where(challenges, {status: 'pending'});
 
@@ -55,7 +55,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.report = function() {
-    console.log("REPORT", $scope.total, $scope.time, $scope.average);
+    $http.post(SERVER_URL + "counters", {bytes: $scope.total});
   };
 
   $scope.getAverage = function() {

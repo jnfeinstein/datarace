@@ -49,8 +49,8 @@ angular.module('starter.services', [])
     }
   };
 })
-.factory('Challenges', function(store, $resource) {
-  return $resource('http://localhost:3000/challenges/:id', null, {
+.factory('Challenges', function(store, $resource, SERVER_URL) {
+  return $resource(SERVER_URL + 'challenges/:id', null, {
     'update': { method:'PUT' }
   });
 });
