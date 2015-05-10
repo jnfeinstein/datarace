@@ -1,5 +1,6 @@
 var app = require('express')(),
     bodyParser = require('body-parser'),
+    cors = require('cors'),
     env = require('./env'),
     http = require('http').Server(app),
     jwt = require('express-jwt'),
@@ -13,6 +14,7 @@ var jwtCheck = jwt({
   audience: 'anDND1WDueNYUpAyiwp4JN5sJVfZGsfC'
 });
 
+app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
