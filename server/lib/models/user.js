@@ -6,9 +6,6 @@ var auth = require('../auth'),
 
 var UserSchema = Schema({
   newAuth: Boolean,
-  challenges: [{type: Schema.ObjectId, ref: 'Challenge'}],
-  invites: [{type: Schema.ObjectId, ref: 'Invite'}],
-  counters: [{type: Schema.ObjectId, ref: 'Counter'}],
   name: String,
   nickname: String,
   email: String,

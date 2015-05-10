@@ -2,16 +2,17 @@ var router = require('express').Router(),
     lib = require('./lib'),
     Invite = lib.models.Invite,
     Challenge = lib.models.Challenge,
+    Counter = lib.models.Counter,
     User = lib.models.User,
     Promise = require('bluebird');
 
 router.get('/', function(req, res) {
   User.getFromReqAsync(req)
     .then(function(user) {
-      return user.populateAsync('invites');
+      return Invite.findAsync({ user: user._id });
     })
-    .then(function(user) {
-      res.json(user.invites);
+    .then(function(invites) {
+      res.json(invites);
     });
 });
 
@@ -52,10 +53,16 @@ router.post('/:id', function(req, res) {
       Invite.findByIdAndRemove(id);
 
       if (accept) {
-        return Challenge.updateAsync(
-          { _id: invite.challenge },
-          { $push: { users: invite.user } }
-        );
+        return [
+          Challenge.updateAsync(
+            { _id: invite.challenge },
+            { $push: { users: invite.user } }
+          ),
+          Counter.createAsync({
+            challenge: invite.challenge,
+            user: invite.user
+          })
+        ];
       }
     })
     .then(function() {

@@ -7,8 +7,6 @@ var ChallengeSchema = Schema({
   name: String,
   creator: {type: Schema.ObjectId, ref: 'User'},
   users: [{type: Schema.ObjectId, ref: 'User'}],
-  invites: [{type: Schema.ObjectId, ref: 'Invite'}],
-  counters: [{type: Schema.ObjectId, ref: 'Counter'},],
   expiresAt: Date
 });
 

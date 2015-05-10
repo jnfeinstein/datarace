@@ -6,10 +6,10 @@ var router = require('express').Router(),
 router.get('/', function(req, res) {
   User.getFromReqAsync(req)
     .then(function(user) {
-      return user.populateAsync('challenges');
+      return Challenge.findAsync({ user: user._id });
     })
-    .then(function(user) {
-      res.json(user.challenges);
+    .then(function(challenges) {
+      res.json(challenges);
     });
 });
 

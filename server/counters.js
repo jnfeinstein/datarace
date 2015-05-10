@@ -1,5 +1,6 @@
 var router = require('express').Router(),
     lib = require('./lib'),
+    Counter = lib.models.Counter,
     User = lib.models.User;
 
 router.post('/', function(req, res) {
@@ -11,9 +12,9 @@ router.post('/', function(req, res) {
     .then(function(user) {
       reqUser = user;
 
-      return user.populateAsync({
-        path: 'counters',
-        match: { expired: false }
+      return Counter.findAsync({
+        user: user._id,
+        expired: false
       });
     })
     .then(function(counters) {

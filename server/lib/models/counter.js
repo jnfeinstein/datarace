@@ -1,4 +1,5 @@
-var mongoose = require('mongoose'),
+var findOrCreate = require('mongoose-findorcreate'),
+    mongoose = require('mongoose'),
     Promise = require('bluebird'),
     Schema = mongoose.Schema;
 
@@ -8,6 +9,8 @@ var CounterSchema = Schema({
   bytes: Number,
   expired: Boolean
 });
+
+CounterSchema.plugin(findOrCreate);
 
 var Counter = mongoose.model('Counter', CounterSchema);
 Promise.promisifyAll(Counter);
