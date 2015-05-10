@@ -7,7 +7,7 @@
     <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
     </ion-refresher>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="challenge in challenges" type="item-text-wrap">
+      <ion-item class="item-avatar item-icon-right" ng-repeat="challenge in challenges" type="item-text-wrap">
         <img ng-src="{{ trimPicture(challenge.picture) }}">
         <h2>{{challenge.name}}</h2>
 
@@ -17,7 +17,7 @@
       </ion-item>
     </ion-list>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="invite in invites" type="item-text-wrap">
+      <ion-item class="item-avatar item-icon-right" ng-repeat="invite in invites" type="item-text-wrap">
         <img ng-src="{{ trimPicture(invite.picture) }}">
         <h2>{{invite.name}}</h2>
 
