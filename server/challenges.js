@@ -6,7 +6,7 @@ var router = require('express').Router(),
 router.get('/', function(req, res) {
   User.getFromReqAsync(req)
     .then(function(user) {
-      return Challenge.findAsync({ user: user._id });
+      return Challenge.findAsync({ users: user._id });
     })
     .then(function(challenges) {
       res.json(challenges);
