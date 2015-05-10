@@ -1,6 +1,5 @@
 var files = {
-  "http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone.js": 17723,
-  "http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js": 241976,
+  "http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js": 336396,
 };
 
 
@@ -72,7 +71,7 @@ angular.module('starter.controllers', [])
     if (!$scope.downloading) return;
 
     var cacheBuster = "?cache=" + new Date().getTime();
-    var url = "http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.js" + cacheBuster;
+    var url = "http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.js"+ cacheBuster;
     $scope.canceler = $q.defer();
     $scope.xhr = $http.jsonp(url, {timeout: $scope.canceler})
       .success(downloadCallback)
