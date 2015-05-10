@@ -18,16 +18,16 @@ router.post('/', function(req, res) {
       });
     })
     .then(function(counters) {
-      return [
-        reqUser.updateAsync({
+      reqUser.updateAsync({
+        $inc: { bytes: bytes }
+      });
+
+      counters.forEach(function(counter) {
+        counter.updateAsync({
           $inc: { bytes: bytes }
-        }),
-        counters.updateAsync({
-          $inc: { bytes: bytes }
-        })
-      ];
-    })
-    .then(function(rez) {
+        });
+      });
+
       res.send('success');
     });
 });
