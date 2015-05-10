@@ -1,9 +1,8 @@
-global.lib = require('../lib');
-
 var app = require('express')(),
     env = require('./env'),
     http = require('http').Server(app),
     jwt = require('express-jwt'),
+    lib = require('./lib'),
     mongo = lib.Mongo,
     path = require("path"),
     static = require('express').static;
@@ -14,14 +13,14 @@ var jwtCheck = jwt({
 });
 
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname+'/../client/index.html'));
+  res.sendFile(path.join(__dirname+'/../www/index.html'));
 });
 
 app.use( '/challenges', jwtCheck);
 app.use( '/challenges', require('./challenges') );
 
 if ( !env.isProduction() ) {
-  app.use(static('.'));
+  app.use(static('www'));
 }
 
 // Log all errors
