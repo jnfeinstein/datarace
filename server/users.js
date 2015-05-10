@@ -31,8 +31,10 @@ setInterval(function() {
       });
     })
     .map(function(user) {
-      user.newAuth = false;
-      return user.saveAsync();
+      if (!user instanceof Error) {
+        user.newAuth = false;
+        return user.saveAsync();
+      }
     });
 }, 5000);
 
