@@ -45,8 +45,6 @@ angular.module('authentication')
       AuthTools.token(null);
     }
 
-    window.AuthTools = AuthTools;
-
     return AuthTools;
   }])
 

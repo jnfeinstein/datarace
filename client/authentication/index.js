@@ -5,5 +5,5 @@ angular.module('authentication', [
   'auth0'
 ]);
 
-require('./setup');
 require('./auth-tools');
+require('./setup');
