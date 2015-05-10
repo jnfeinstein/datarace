@@ -9,15 +9,15 @@ router.get('/', function(req, res) {
     });
 });
 
-router.get('/:id', function(req, res) {
-  User.findById(req.params.id)
+router.get('/me', function(req, res) {
+  User.getFromReqAsync(req)
     .then(function(user) {
       res.json(user);
     });
 });
 
-router.get('/me', function(req, res) {
-  User.getFromReqAsync(req)
+router.get('/:id', function(req, res) {
+  User.findById(req.params.id)
     .then(function(user) {
       res.json(user);
     });
