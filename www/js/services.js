@@ -53,4 +53,10 @@ angular.module('starter.services', [])
   return $resource(SERVER_URL + 'challenges/:id', null, {
     'update': { method:'PUT' }
   });
-});
+})
+.factory('Invites', function(store, $resource, SERVER_URL) {
+  return $resource(SERVER_URL + 'invites/:id', null, {
+    'update': { method:'PUT' }
+  });
+})
+;

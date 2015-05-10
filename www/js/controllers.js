@@ -27,11 +27,8 @@ angular.module('starter.controllers', [])
   $scope.login();
 })
 
-.controller('HomeCtrl', function($scope, $http, $q, Challenges, SERVER_URL) {
-  var challenges = Challenges.query();
-  $scope.pendingChallenges = _.where(challenges, {status: 'pending'});
-
-  $scope.pendingChallengeNames = _.pluck($scope.pendingChallenges, "name").join(", ");
+.controller('HomeCtrl', function($scope, $http, $q, Invites, SERVER_URL) {
+  $scope.invites = Invites.query();
   $scope.downloading = false;
 
   $scope.toggleDownload = function() {
@@ -101,7 +98,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ChallengesCtrl', function($scope, Challenges) {
+.controller('ChallengesCtrl', function($scope, Challenges, Invites) {
   fetch();
 
   $scope.acceptChallenge = function(chat) {
@@ -119,8 +116,8 @@ angular.module('starter.controllers', [])
   };
 
   function fetch(callback) {
+    $scope.invites = Invites.query();
     $scope.challenges = Challenges.query(callback);
-    $scope.pendingChallenges = _.where($scope.challenges, {status: 'pending'});
   }
 })
 
