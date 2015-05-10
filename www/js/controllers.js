@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
         $scope.users.forEach(function(user) {
           user.selected = false;
         });
-        $scope.challenges.push(challenge);
+        $scope.challenges = Challenges.query();
         $scope.modal.hide();
       });
   }
