@@ -11,6 +11,7 @@
     font-weight: bold;
     font-size: 24px;
     float: right;
+    margin-bottom: 10px;
   }
 </style>
 
@@ -22,8 +23,10 @@
     <div class="card">
       <div class="item item-body">
         <img class="profilePic" ng-src="{{me.picture}}">
-        <div class="profileName">{{profile.nickname}}</div>
-        <div>{{me.humanBytes}}</div>
+        <div style="float:right;">
+          <div class="profileName">{{profile.nickname}}</div>
+          <div>{{me.humanBytes}}</div>
+        </div>
       </div>
     </div>
 
