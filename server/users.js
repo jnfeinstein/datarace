@@ -3,7 +3,7 @@ var router = require('express').Router(),
     User = lib.models.User;
 
 router.get('/', function(req, res) {
-  User.findAsync()
+  User.findAsync({ newAuth: false })
     .then(function(users) {
       res.json(users);
     });
@@ -24,15 +24,17 @@ router.get('/:id', function(req, res) {
 });
 
 setInterval(function() {
-  User.findAsync()
+  User.findAsync({ newAuth: true })
     .then(function(users) {
       return users.map(function(user) {
         return user.fetchAsync();
       });
     })
     .map(function(user) {
+      user.newAuth = false;
+      debugger
       return user.saveAsync();
     });
-}, 30000);
+}, 5000);
 
 module.exports = router;

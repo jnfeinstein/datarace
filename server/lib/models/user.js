@@ -5,21 +5,22 @@ var auth = require('../auth'),
     Schema = mongoose.Schema;
 
 var UserSchema = Schema({
-  authId: String,
+  newAuth: Boolean,
   challenges: [{type: Schema.ObjectId, ref: 'Challenge'}],
   invites: [{type: Schema.ObjectId, ref: 'Invite'}],
   counters: [{type: Schema.ObjectId, ref: 'Counter'}],
   name: String,
   nickname: String,
   email: String,
+  password: String,
   picture: String,
-  bytes: Number
+  bytes: Number,
 });
 
 UserSchema.plugin(findOrCreate);
 
 UserSchema.methods.fetchAsync = function() {
-  return auth.getUserAsync(this.authId)
+  return auth.getUserAsync("auth0|" + this._id)
     .bind(this)
     .then(function(user) {
       var self = this;
@@ -41,9 +42,7 @@ Promise.promisifyAll(User);
 Promise.promisifyAll(User.prototype);
 
 User.getFromReqAsync = function(req) {
-  var authId = req.user.sub;
-
-  return User.findOrCreateAsync({ authId: authId })
+  return User.findById(req.user.sub)
     .then(function(users) {
       return users[0];
     });
