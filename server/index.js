@@ -38,8 +38,7 @@ app.use(function (err, req, res, next) {
 
 // Generic error handler
 app.use(function errorHandler(err, req, res, next) {
-  res.status(500);
-  res.render('error', { error: err });
+  res.status(500).send(err);
 });
 
 lib.Mongo.connect();
