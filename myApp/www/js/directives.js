@@ -20,6 +20,12 @@ angular.module('smoothie-directive', [])
 
       this.smoothie = new SmoothieChart({
         minValue: 0,
+        yMinFormatter: function() {
+          return 0;
+        },
+        yMaxFormatter: function(max, precision) {
+          return formatSizeUnits(parseFloat(max)) + "ps";
+        },
         grid: {
           strokeStyle: $scope.lineColor || 'transparent',
           lineWidth: 1,
@@ -29,11 +35,12 @@ angular.module('smoothie-directive', [])
           fillStyle: $scope.background || 'transparent',
           millisPerLine: $scope.millisPerLine,
           verticalSections: $scope.verticalSections,
+          sharpLines: false,
         },
         labels: {
-fillStyle: 'black',
+          fillStyle: 'black',
           disabled: false,
-precision: 2,
+          precision: 2,
         }
       });
     }
@@ -80,3 +87,13 @@ precision: 2,
     }
   };
 });
+
+function formatSizeUnits(bytes){
+  if      (bytes>=1000000000) {bytes=(bytes/1000000000).toFixed(2)+' GB';}
+  else if (bytes>=1000000)    {bytes=(bytes/1000000).toFixed(2)+' MB';}
+  else if (bytes>=1000)       {bytes=(bytes/1000).toFixed(2)+' KB';}
+  else if (bytes>1)           {bytes=bytes+' bytes';}
+  else if (bytes==1)          {bytes=bytes+' byte';}
+  else                        {bytes='0 byte';}
+  return bytes;
+}
