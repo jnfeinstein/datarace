@@ -154,6 +154,22 @@ angular.module('starter', [
       }
     })
 
+  .state('tab.challenges', {
+    url: '/challenges',
+    views: {
+      'tab-challenges': {
+        templateUrl: 'templates/tab-challenges.html',
+        controller: 'ChallengesCtrl'
+      }
+    },
+    data: {
+      // This tells Auth0 that this state requires the user to be logged in.
+      // If the user isn't logged in and he tries to access this state
+      // he'll be redirected to the login page
+      requiresLogin: true
+    }
+  })
+
   .state('tab.account', {
     url: '/account',
     views: {
