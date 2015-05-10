@@ -10,6 +10,7 @@
       <ion-item class="item-avatar item-icon-right" ng-repeat="challenge in challenges" type="item-text-wrap">
         <img ng-src="{{ trimPicture(challenge.picture) }}">
         <h2>{{challenge.name}}</h2>
+        <label>{{challenge.bytes}}</label>
 
         <ion-option-button class="button-balanced" ng-click="leaveChallenge(challenge)">
           Leave

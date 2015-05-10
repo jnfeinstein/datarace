@@ -113,7 +113,7 @@ angular.module('starter.controllers', [])
   $scope.trimPicture = trimPicture;
 })
 
-.controller('ChallengesCtrl', function($scope, $ionicModal, $q, Challenges, Invites, Users, auth, trimPicture) {
+.controller('ChallengesCtrl', function($scope, $ionicModal, $q, Challenges, Invites, Users, auth, trimPicture, Counters, formatSizeUnits) {
   $scope.challenges = [];
   $scope.invites = [];
   Users.query().$promise.then(function(users) {
@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
         $scope.users.forEach(function(user) {
           user.selected = false;
         });
-        $scope.challenges = Challenges.query();
+        doRefresh();
         $scope.modal.hide();
       });
   }
@@ -158,8 +158,7 @@ angular.module('starter.controllers', [])
       id: invite._id,
       accept: true
     }).$promise.then(function() {
-      $scope.invites = Invites.query();
-      $scope.challenges = Challenges.query();
+      doRefresh();
     })
   };
 
@@ -169,16 +168,25 @@ angular.module('starter.controllers', [])
       id: invite._id,
       accept: false
     }).$promise.then(function() {
-      $scope.invites = Invites.query();
-      $scope.challenges = Challenges.query();
+      doRefresh();
     })
   };
 
   $scope.doRefresh = function() {
-    $q.all([ Challenges.query().$promise, Invites.query().$promise ])
+    $q.all([ Challenges.query().$promise, Invites.query().$promise, Counters.query().$promise ])
       .then(function(rez) {
         $scope.challenges = rez[0];
         $scope.invites = rez[1];
+
+        rez[2].forEach(function(counter) {
+          $scope.challenges
+          .filter(function(challenge) {
+            return challenge._id == counter.challenge;
+          })
+          .forEach(function(challenge) {
+            challenge.bytes = formatSizeUnits(counter.bytes);
+          })
+        });
         $scope.$broadcast('scroll.refreshComplete');
       });
   };

@@ -3,6 +3,18 @@ var router = require('express').Router(),
     Counter = lib.models.Counter,
     User = lib.models.User;
 
+router.get('/', function(req, res) {
+  User.getFromReqAsync(req)
+    .then(function(user) {
+      return Counter.findAsync({
+        user: user._id
+      });
+    })
+    .then(function(counters) {
+      res.json(counters);
+    });
+});
+
 router.post('/', function(req, res) {
   var bytes = req.body.bytes;
 
