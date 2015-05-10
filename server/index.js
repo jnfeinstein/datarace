@@ -28,6 +28,9 @@ app.use( '/challenges', require('./challenges') );
 app.use( '/counters', jwtCheck);
 app.use( '/counters', require('./counters') );
 
+app.use( '/invites', jwtCheck);
+app.use( '/invites', require('./invites') );
+
 if ( !env.isProduction() ) {
   app.use(static('www'));
 }

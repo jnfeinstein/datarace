@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 var ChallengeSchema = Schema({
   creator: {type: Schema.ObjectId, ref: 'User'},
   users: [{type: Schema.ObjectId, ref: 'User'}],
+  invites: [{type: Schema.ObjectId, ref: 'Invite'}],
   counters: [{type: Schema.ObjectId, ref: 'Counter'},],
   expiresAt: Date
 });

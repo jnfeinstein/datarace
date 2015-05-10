@@ -7,6 +7,7 @@ var auth = require('../auth'),
 var UserSchema = Schema({
   authId: String,
   challenges: [{type: Schema.ObjectId, ref: 'Challenge'}],
+  invites: [{type: Schema.ObjectId, ref: 'Invite'}],
   counters: [{type: Schema.ObjectId, ref: 'Counter'}],
   name: String,
   nickname: String,
