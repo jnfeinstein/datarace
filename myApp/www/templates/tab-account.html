@@ -1,10 +1,12 @@
+<style>
+  .logoutButton {
+    width: 100%;
+  }
+</style>
+
 <ion-view view-title="Account">
-  <ion-content>
+  <ion-content class="padding">
     <h1>{{profile.nickname}}</h1>
-    <ion-list>
-      <ion-toggle  ng-model="settings.enableFriends">
-          Enable Friends
-      </ion-toggle>
-    </ion-list>
+    <button type="button" class="button button-assertive logoutButton" ng-click="logout()"/>Log out</button>
   </ion-content>
 </ion-view>

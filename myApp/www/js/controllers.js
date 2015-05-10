@@ -6,7 +6,7 @@ var files = {
 
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function LoginCtrl(store, $scope, $location, auth) {
+.controller('LoginCtrl', function LoginCtrl(store, $scope, $location, auth, $ionicLoading) {
   $scope.login = function() {
     auth.signin({
       authParams: {
@@ -22,7 +22,9 @@ angular.module('starter.controllers', [])
     }, function() {
       // Error callback
     });
-  }
+  };
+
+  $scope.login();
 })
 
 .controller('HomeCtrl', function($scope, $http, $q, Challenges) {
@@ -116,11 +118,18 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('AccountCtrl', function($scope, auth) {
+.controller('AccountCtrl', function($scope, auth, store, $location) {
   $scope.settings = {
     enableFriends: true
   };
 
   $scope.profile = auth.profile;
+
+  $scope.logout = function() {
+    auth.signout();
+    store.remove('profile');
+    store.remove('token');
+    $location.path('/');
+  };
 });
 
