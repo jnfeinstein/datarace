@@ -154,10 +154,24 @@ angular.module('starter.controllers', [])
 
   $scope.acceptInvite = function(invite) {
     //Challenges.remove(chat);
+    Invites.save({
+      id: invite._id,
+      accept: true
+    }).$promise.then(function() {
+      $scope.invites = Invites.query();
+      $scope.challenges = Challenges.query();
+    })
   };
 
   $scope.ignoreInvite = function(invite) {
     //Challenges.remove(chat);
+    Invites.save({
+      id: invite._id,
+      accept: false
+    }).$promise.then(function() {
+      $scope.invites = Invites.query();
+      $scope.challenges = Challenges.query();
+    })
   };
 
   $scope.doRefresh = function() {

@@ -4,7 +4,7 @@ angular.module('starter.services', [])
   return $resource(SERVER_URL + 'challenges/:id');
 })
 .factory('Invites', function(store, $resource, SERVER_URL) {
-  return $resource(SERVER_URL + 'invites/:id');
+  return $resource(SERVER_URL + 'invites/:inviteId', {inviteId: "@id"});
 })
 .factory('Users', function(store, $resource, SERVER_URL) {
   return $resource(SERVER_URL + 'users/:id', null, {

@@ -41,16 +41,19 @@ router.post('/:id', function(req, res) {
   var id = req.params.id,
       accept = req.body.accept;
 
+  var reqUser;
+
   User.getFromReqAsync(req)
     .then(function(user) {
+      reqUser = user;
       return Invite.findByIdAsync(id);
     })
     .then(function(invite) {
-      if (invite.user != user._id) {
+      if ( !invite.user.equals(reqUser._id) ) {
         return Promise.reject('not authorized');
       }
 
-      Invite.findByIdAndRemove(id);
+      invite.remove();
 
       if (accept) {
         return [
