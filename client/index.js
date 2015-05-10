@@ -1,18 +1,21 @@
 window.angular = require('angular');
 require('angular-cookies');
 require('angular-jwt');
+require('angular-resource');
 require('angular-route');
 require('angular-storage');
 require('angular-bootstrap');
 
 require('./authentication');
 require('./home');
+require('./dashboard');
 require('./widgets');
+require('./api');
 
 angular.module('app', [
-  'angular-jwt',
-  'angular-storage',
+  'api.challenges',
   'authentication',
+  'dashboard',
   'home',
   'ngRoute',
   'templates',
