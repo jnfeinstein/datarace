@@ -12,7 +12,8 @@ var UserSchema = Schema({
   name: String,
   nickname: String,
   email: String,
-  picture: String
+  picture: String,
+  bytes: Number
 });
 
 UserSchema.plugin(findOrCreate);

@@ -7,10 +7,15 @@ router.post('/', function(req, res) {
 
   User.getFromReqAsync(req)
     .then(function(user) {
-      return user.populateAsync({
-        path: 'counters',
-        match: { expired: false }
-      });
+      return [
+        user.populateAsync({
+          path: 'counters',
+          match: { expired: false }
+        }),
+        user.update({
+          bytes: { $add: ["$bytes", bytes] }
+        })
+      ];
     })
     .then(function(counters) {
       return counters.updateAsync({
