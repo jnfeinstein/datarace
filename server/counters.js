@@ -5,24 +5,28 @@ var router = require('express').Router(),
 router.post('/', function(req, res) {
   var bytes = req.body.bytes;
 
+  var reqUser;
+
   User.getFromReqAsync(req)
     .then(function(user) {
+      reqUser = user;
+
+      return user.populateAsync({
+        path: 'counters',
+        match: { expired: false }
+      });
+    })
+    .then(function(counters) {
       return [
-        user.populateAsync({
-          path: 'counters',
-          match: { expired: false }
+        reqUser.updateAsync({
+          $inc: { bytes: bytes }
         }),
-        user.update({
-          bytes: { $add: ["$bytes", bytes] }
+        counters.updateAsync({
+          $inc: { bytes: bytes }
         })
       ];
     })
-    .then(function(counters) {
-      return counters.updateAsync({
-        bytes: { $add: ["$bytes", bytes] }
-      });
-    })
-    .then(function() {
+    .then(function(rez) {
       res.send('success');
     });
 });

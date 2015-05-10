@@ -31,7 +31,6 @@ setInterval(function() {
       });
     })
     .map(function(user) {
-      console.log(user);
       return user.saveAsync();
     });
 }, 30000);
