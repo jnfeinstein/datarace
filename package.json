@@ -4,7 +4,6 @@
   "description": "Data race to the finish!",
   "scripts": {
     "compile": "gulp",
-    "test": "gulp test",
     "start": "node server/index.js",
     "debug": "node debug server/index.js"
   },
