@@ -1,4 +1,5 @@
 var app = require('express')(),
+    bodyParser = require('body-parser'),
     env = require('./env'),
     http = require('http').Server(app),
     jwt = require('express-jwt'),
@@ -12,12 +13,18 @@ var jwtCheck = jwt({
   audience: 'anDND1WDueNYUpAyiwp4JN5sJVfZGsfC'
 });
 
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname+'/../www/index.html'));
 });
 
 app.use( '/challenges', jwtCheck);
 app.use( '/challenges', require('./challenges') );
+
+app.use( '/counters', jwtCheck);
+app.use( '/counters', require('./counters') );
 
 if ( !env.isProduction() ) {
   app.use(static('www'));

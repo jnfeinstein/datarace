@@ -1,5 +1,5 @@
 var router = require('express').Router(),
-    lib = require('../lib'),
+    lib = require('./lib'),
     Challenge = lib.models.Challenge,
     User = lib.models.User;
 

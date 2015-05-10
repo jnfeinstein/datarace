@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 var CounterSchema = Schema({
   user: {type: Schema.ObjectId, ref: 'User'},
   challenge: {type: Schema.ObjectId, ref: 'Challenge'},
-  bytes: Number
+  bytes: Number,
+  expired: Boolean
 });
 
 var Counter = mongoose.model('Counter', CounterSchema);
