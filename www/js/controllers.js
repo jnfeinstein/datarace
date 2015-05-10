@@ -27,7 +27,7 @@ angular.module('starter.controllers', [])
   $scope.login();
 })
 
-.controller('HomeCtrl', function($scope, $http, $q, Invites, SERVER_URL) {
+.controller('HomeCtrl', function($scope, $http, $q, Invites, SERVER_URL, formatSizeUnits) {
   $scope.invites = Invites.query();
   $scope.downloading = false;
 
@@ -77,6 +77,7 @@ angular.module('starter.controllers', [])
 
     var fileSize = files[file];
     $scope.total = $scope.total + fileSize;
+    $scope.humanTotal = formatSizeUnits($scope.total);
     $scope.time = $scope.time + (endTime - startTime);
     $scope.average = ($scope.total / $scope.time) * 1000;
     if ($scope.downloading) {
@@ -121,7 +122,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AccountCtrl', function($scope, auth, store, $location, Users, $http, SERVER_URL) {
+.controller('AccountCtrl', function($scope, auth, store, $location, Users, $http, SERVER_URL, formatSizeUnits) {
   $scope.settings = {
     enableFriends: true
   };
@@ -140,6 +141,7 @@ angular.module('starter.controllers', [])
   $scope.doRefresh = function() {
     $http.get(SERVER_URL + "users/me").success(function(data) {
       $scope.me = data;
+      $scope.me.humanBytes = formatSizeUnits($scope.me.bytes);
       $scope.$broadcast('scroll.refreshComplete');
     });
   };

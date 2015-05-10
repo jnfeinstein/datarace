@@ -18,7 +18,7 @@
       {{downloading ? "Stop" : "Start"}} download
     </button>
 
-    <h2>{{total}}</h2>
+    <h2>{{humanTotal}}</h2>
 
     <smoothie-grid width="250" height="200" ng-if="downloading" millisPerLine="250" verticalSections="6" lineColor="rgb(60, 0, 0)">
       <time-series callback="getAverage()" color="blue" rate="100"></time-series>
