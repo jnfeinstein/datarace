@@ -90,9 +90,9 @@ angular.module('starter.controllers', [])
   $scope.leaders = Users.query();
 
   $scope.doRefresh = function() {
-    setTimeout(function() {
+    $scope.leaders = Users.query(function() {
       $scope.$broadcast('scroll.refreshComplete');
-    }, 1000);
+    });
   };
 
   $scope.formatSizeUnits = formatSizeUnits;
